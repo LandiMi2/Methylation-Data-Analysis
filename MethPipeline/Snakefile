@@ -1,1 +1,78 @@
+import os
+import glob 
 
+BASE="/data01/mlandi/ArabVirus-Epigenetics/Bismark"
+DATA=os.path.join(BASE, "data/Mock")
+MAP=os.path.join(BASE, "map/Mock")
+genome="/data01/mlandi/ArabVirus-Epigenetics/Bismark/genome"
+
+# Define samples using glob
+SAMPLES, = glob_wildcards(os.path.join(DATA, "{samples}_R1.fastq.gz"))
+
+rule all:
+    input:
+        expand(os.path.join(MAP, "report/{samples}_R1_bismark_bt2_pe.report.html"), samples=SAMPLES)
+
+rule bismark_align:
+    input:
+        read1=os.path.join(DATA, "{samples}_R1.fastq.gz"),
+        read2=os.path.join(DATA, "{samples}_R2.fastq.gz")
+        
+    output:
+        align_bam=os.path.join(MAP, "bam/{samples}_R1_bismark_bt2_pe.bam"),
+        align_report=os.path.join(MAP, "bam/{samples}_R1_bismark_bt2_PE_report.txt")
+    params:
+        bam_dir=os.path.join(MAP, "bam")
+        
+    threads: 8
+    shell:
+        """
+        bismark --un --ambiguous --genome {genome} -1 {input.read1} -2 {input.read2} -o {params.bam_dir} --parallel {threads}
+        """
+        
+rule bismark_deduplicate:
+    input:
+        dedup_bam=os.path.join(MAP, "bam/{samples}_R1_bismark_bt2_pe.bam")
+    output:
+        dedup_out_bam=os.path.join(MAP, "dedups/{samples}_R1_bismark_bt2_pe.deduplicated.bam"),
+        dedup_out_report=os.path.join(MAP, "dedups/{samples}_R1_bismark_bt2_pe.deduplication_report.txt")
+    params:
+        dedup_dir=os.path.join(MAP, "dedups")
+    shell:
+        """
+        deduplicate_bismark -p {input.dedup_bam} --output_dir {params.dedup_dir}
+        """
+
+rule bismark_methylation_extractor:
+    input:
+        methyl_bam=os.path.join(MAP, "dedups/{samples}_R1_bismark_bt2_pe.deduplicated.bam")
+    output:
+        methyl_out_CHG=os.path.join(MAP, "meth/CHG_context_{samples}_R1_bismark_bt2_pe.deduplicated.txt"),
+        methyl_out_CHH=os.path.join(MAP, "meth/CHH_context_{samples}_R1_bismark_bt2_pe.deduplicated.txt"),
+        methyl_out_CpG=os.path.join(MAP, "meth/CpG_context_{samples}_R1_bismark_bt2_pe.deduplicated.txt"),
+        methyl_out_mbias=os.path.join(MAP, "meth/{samples}_R1_bismark_bt2_pe.deduplicated.M-bias.txt"),
+        methyl_out_splitting_report=os.path.join(MAP, "meth/{samples}_R1_bismark_bt2_pe.deduplicated_splitting_report.txt"),
+        methyl_report_CX=os.path.join(MAP, "meth/{samples}_R1_bismark_bt2_pe.deduplicated.CX_report.txt"),
+        methyl_out_bedgraph=os.path.join(MAP, "meth/{samples}_R1_bismark_bt2_pe.deduplicated.bedGraph.gz"),
+        methyl_out_cov=os.path.join(MAP, "meth/{samples}_R1_bismark_bt2_pe.deduplicated.bismark.cov.gz")
+    params:
+        methyl_dir=os.path.join(MAP, "meth")
+    threads: 8
+    shell:
+        """
+        bismark_methylation_extractor -p --no_overlap --cytosine_report --CX --comprehensive --ignore 10 --ignore_r2 10 --genome_folder {genome} {input.methyl_bam} -o {params.methyl_dir} --parallel {threads}
+        """
+
+
+rule report:
+    input:
+        align=os.path.join(MAP, "bam/{samples}_R1_bismark_bt2_PE_report.txt"),
+        dedup=os.path.join(MAP, "dedups/{samples}_R1_bismark_bt2_pe.deduplication_report.txt"),
+        mbias=os.path.join(MAP, "meth/{samples}_R1_bismark_bt2_pe.deduplicated.M-bias.txt")
+    output:
+        report=os.path.join(MAP, "report/{samples}_R1_bismark_bt2_pe.report.html")
+
+    shell:
+        """
+        bismark2report --alignment_report {input.align} --dedup_report {input.dedup} --mbias_report {input.mbias} -o {output.report}
+        """
