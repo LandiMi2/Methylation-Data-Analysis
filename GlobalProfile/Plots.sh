@@ -30,3 +30,17 @@ plotPCA \
   --plotTitle "PCA" \
   --labels "CMV1" "CMV2" "CaMV1" "CaMV2" "Mock1" "Mock2" \
   --colors "#ff2a0e" "#ff2a0e" "#ff9f4e" "#ff9f4e" "#1f77b4" "#1f77b4"
+
+##TE metaplot
+computeMatrix scale-regions -S ../CMV1.CpG.bw ../CMV2.CpG.bw ../CMV3.CpG.bw \
+../CaMV1.CpG.bw ../CaMV2.CpG.bw ../CaMV3.CpG.bw \
+../Mock1.CpG.bw ../Mock2.CpG.bw ../Mock3.CpG.bw \
+-R te.bed --beforeRegionStartLength 2000 -p 10 --afterRegionStartLength 2000 \
+--regionBodyLength 5000 --samplesLabel "CMV1" "CMV2" "CMV3" "CaMV1" "CaMV2" "CaMV3" "Mock1" "Mock2" "Mock3" -o CpG.te.matrix.gz
+
+#metaplot
+plotProfile -m  CpG.te.matrix.gz -out CpG.TE.pdf --perGroup \
+--colors "#ff2a0e" "#ff2a0e" "#ff2a0e" "#ff9f4e" "#ff9f4e" "#ff9f4e" "#1f77b4" "#1f77b4" "#1f77b4" \
+--plotTitle "Transposon" \
+--refPointLabel "TSS/TTS"
+
