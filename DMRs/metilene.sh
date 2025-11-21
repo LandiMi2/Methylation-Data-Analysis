@@ -6,8 +6,8 @@ metilene_input.pl --in1 ../../filtered/Mock/CpG/Mock2.CpG.bedGraph,../../filtere
 
 #run metilene
 metilene -a mock -b cmv mock_cmv_cpg.input | sort -V -k1,1 -k2,2n > mock_cmv_cpg.dmrs
-#filter 25% methylation differences 
-awk '($5 >= 25 || $5 <= -25)' mock_cmv_cpg.dmrs > mock_cmv_cpg.0.25.dmrs
+#filter 10% methylation differences 
+awk '($5 >= 10 || $5 <= -10)' mock_cmv_cpg.dmrs > mock_cmv_cpg.0.10.dmrs
 
 #CHG
 metilene_input.pl --in1 ../../filtered/Mock/CHG/Mock2.CHG.bedGraph,../../filtered/Mock/CHG/Mock3.CHG.bedGraph \
@@ -15,7 +15,7 @@ metilene_input.pl --in1 ../../filtered/Mock/CHG/Mock2.CHG.bedGraph,../../filtere
 -o mock_cmv_chg.input
 
 metilene -a mock -b cmv mock_cmv_chg.input | sort -V -k1,1 -k2,2n > mock_cmv_chg.dmrs
-awk '($5 >= 25 || $5 <= -25)' mock_cmv_chg.dmrs > mock_cmv_chg.0.25.dmrs
+awk '($5 >= 10 || $5 <= -10)' mock_cmv_chg.dmrs > mock_cmv_chg.0.10.dmrs
 
 #CHH
 metilene_input.pl --in1 ../../filtered/Mock/CHH/Mock2.CHH.bedGraph,../../filtered/Mock/CHH/Mock3.CHH.bedGraph \
@@ -23,4 +23,4 @@ metilene_input.pl --in1 ../../filtered/Mock/CHH/Mock2.CHH.bedGraph,../../filtere
 -o mock_cmv_chh.input
 
 metilene -a mock -b cmv mock_cmv_chh.input | sort -V -k1,1 -k2,2n > mock_cmv_chh.dmrs
-awk '($5 >= 25 || $5 <= -25)' mock_cmv_chh.dmrs > mock_cmv_chh.0.25.dmrs
+awk '($5 >= 10 || $5 <= -10)' mock_cmv_chh.dmrs > mock_cmv_chh.0.10.dmrs
