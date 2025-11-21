@@ -1,0 +1,25 @@
+SAMPLES = ["HAF1", "HAF21", "HAF4", "HAF7"]
+CONTEXTS = ["CpG", "CHG", "CHH"]
+
+rule all:
+    input:
+        expand("{sample}_{context}.bedGraph.gz", sample=SAMPLES, context=CONTEXTS),
+        expand("{sample}_{context}.bismark.cov.gz", sample=SAMPLES, context=CONTEXTS)
+
+rule bismark2bedGraph_per_context:
+    input:
+        "../{context}_context_{sample}_R1_bismark_bt2_pe.deduplicated.txt"
+    output:
+        bedGraph = "{sample}_{context}.bedGraph.gz",
+        cov      = "{sample}_{context}.bismark.cov.gz"
+    log:
+        "logs/{context}/{sample}.log"
+    params:
+        extra = lambda wildcards: "--CX" if wildcards.context in ["CHG", "CHH"] else ""
+    shell:
+        """
+        mkdir -p logs/{wildcards.context}
+        bismark2bedGraph {params.extra} \
+            --output {output.bedGraph} \
+            {input} > {log} 2>&1
+        """
