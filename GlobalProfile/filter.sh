@@ -1,3 +1,7 @@
+## this scrip is for Mock samples and CpG context. This script can be modified using sed command
+# for example, sed "s/Mock/CMV/g; s/CpG/CHG/g" filter.sh > filterCHG.sh 
+
+
 #filter 5 cov
 for file in *.cov; do
     base=$(basename "$file" .cov)
