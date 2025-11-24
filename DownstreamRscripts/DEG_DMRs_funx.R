@@ -1,3 +1,5 @@
+#Per context. Modify the script using the sed command for other context
+
 library(data.table)
 
 setwd("~/Documents/PhD-Bioinformatics-EpiCass/Analysis/Arab-virus-analysis/NewAnalysisNov2025/BismarkAnalysis/dmrs/mock_cmv/")
