@@ -1,3 +1,5 @@
+#Per context. Modify script using sed command for other context
+
 library(data.table)
 library(GenomicRanges)
 setwd("~/Documents/PhD-Bioinformatics-EpiCass/Analysis/Arab-virus-analysis/NewAnalysisNov2025/BismarkAnalysis/dmrs/")
