@@ -1,3 +1,7 @@
+### this R script plots per context, in this case CpG. Modify for other context. 
+#input is from this command - multiBigwigSummary bins -b *.bw --binSize 100000 -out meth100kbCpG.npz --outRawCounts meth100kbCpG.tab 
+
+
 library(data.table)
 library(karyoploteR)
 library(GenomicRanges)
@@ -114,7 +118,7 @@ legend("topright",
        border = NA,
        cex    = 0.8,
        bty    = "n",
-       title  = "CHH")
+       title  = "CpG")
 
 dev.off()
 
