@@ -1,13 +1,14 @@
 import os
 import glob 
 
+## modify path to your specifications 
 BASE="/data01/mlandi/ArabVirus-Epigenetics/Bismark"
 DATA=os.path.join(BASE, "data/Mock")
 MAP=os.path.join(BASE, "map/Mock")
 genome="/data01/mlandi/ArabVirus-Epigenetics/Bismark/genome"
 
 # Define samples using glob
-SAMPLES, = glob_wildcards(os.path.join(DATA, "{samples}_R1.fastq.gz"))
+SAMPLES, = glob_wildcards(os.path.join(DATA, "{samples}_R1.fastq.gz")) 
 
 rule all:
     input:
