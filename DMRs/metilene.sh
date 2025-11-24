@@ -1,3 +1,5 @@
+# Inputs are from pre-filtered coverage files (cov > 5 sites) and NOT common sites files. 
+
 #Prepare input files for metilene
 #CpG
 metilene_input.pl --in1 ../../filtered/Mock/CpG/Mock2.CpG.bedGraph,../../filtered/Mock/CpG/Mock3.CpG.bedGraph \
