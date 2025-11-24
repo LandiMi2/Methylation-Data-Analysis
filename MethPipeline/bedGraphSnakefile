@@ -1,3 +1,6 @@
+
+#modify file names. Note this was done for one group - Mock samples.
+
 SAMPLES = ["HAF1", "HAF21", "HAF4", "HAF7"]
 CONTEXTS = ["CpG", "CHG", "CHH"]
 
