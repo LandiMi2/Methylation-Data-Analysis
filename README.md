@@ -15,7 +15,7 @@ Global methylation profiles using _karyoploteR_ - [karyoPlot.R](https://github.c
 
 ### DMR analysis
 
-Identify DMRs with metilene between mock vs CMV and mock vs CaMV - [metilene.sh](https://github.com/LandiMi2/Methylation-Data-Analysis/blob/main/DMRs/metilene.sh) <br>
+Identify DMRs with metilene between CMV vs Mock and CaMV vs Mock - [metilene.sh](https://github.com/LandiMi2/Methylation-Data-Analysis/blob/main/DMRs/metilene.sh) <br>
 DMR stats - Hyper- hypo- methylated DMR counts - [DMRstats.R](https://github.com/LandiMi2/Methylation-Data-Analysis/blob/main/DownstreamRscripts/DMRstats.R) <br>
 Annotate DMRs using _GenomicRanges_ (gene body + 2 kb promoter) - [Overlap.R](https://github.com/LandiMi2/Methylation-Data-Analysis/blob/main/DownstreamRscripts/Overlap.R) <br>
 Overlap DMRs with RNA-seq DEGs - [DEG_DMRs_funx.R](https://github.com/LandiMi2/Methylation-Data-Analysis/blob/main/DownstreamRscripts/DEG_DMRs_funx.R)
