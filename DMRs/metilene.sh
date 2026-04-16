@@ -1,5 +1,7 @@
 # Inputs are from pre-filtered coverage files (cov > 5 sites) and NOT common sites files. 
 
+#the direction of comparison is virus-infected vs. control (this was updated)
+
 #Prepare input files for metilene
 #CpG
 metilene_input.pl --in1 ../../filtered/CaMV/CpG/CaMV2.CpG.bedGraph,../../filtered/CaMV/CpG/CaMV3.CpG.bedGraph \
