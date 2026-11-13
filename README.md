@@ -1,6 +1,6 @@
 # DNA methylation analysis 
 
-This repository contains workflow and scripts for processing whole-genome bisulfite sequencing (WGBS) data, performing global methylation profiling, and identifying differentially methylated regions (DMRs) in Arabidopsis thaliana using the TAIR10.1 genome.  <br>
+This repository contains workflows and scripts for processing whole-genome bisulfite sequencing (WGBS) data, performing global methylation profiling, and identifying differentially methylated regions (DMRs) in _Arabidopsis thaliana_ using the TAIR10.1 genome.  <br>
 
 Raw bisulfite sequencing reads were assessed using [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and adapter trimming and quality filtering were performed using [Trim Galore](https://github.com/FelixKrueger/TrimGalore).  
 
